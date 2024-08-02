@@ -85,7 +85,15 @@
 
     <div class="container">
         <div class="{{ config.name }}__search-wrapper js-{{ config.name }}__search-wrapper">
-            <div class="{{ config.name }}__search">
+            <div class="{{ config.name }}__search" style="width: 250%!important;border-radius: 32px;margin-top: 20px;">
+                <div class="{{ config.name }}__search-close js-{{ config.name }}__search-file-audio" id="mic" style="right: 65px;">
+                    {% include atom('icon') with {
+                        class: config.name ~ '__search-mic-icon',
+                        data: {
+                            name: 'mic',
+                        },
+                    } only %}
+                </div>
                 <div class="{{ config.name }}__search-close js-{{ config.name }}__search-close">
                     {% include atom('icon') with {
                         class: config.name ~ '__search-close-icon',
@@ -156,6 +164,39 @@
             </div>
         {% endif %}
     </div>
+    <script>
+    const voiceSearchBtn = document.getElementById('mic');
+    const searchInput = document.getElementById('searchText');
+    searchInput.value = '';
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+    var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList
+    var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
+
+            voiceSearchBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = function(event) {
+        const transcript = event.results[0][0].transcript;
+        console.log('Transcript:', transcript);
+        searchInput.value =transcript;
+        const formElement = document.getElementById('searchForm');
+                
+                
+                formElement.submit();
+            
+    };
+
+    recognition.onerror = function(event) {
+        console.error('Speech recognition error', event.error);
+    };
+
+    recognition.start();
+        });
+    </script>
     {% if data.showNavigation %}
         <div class="{{ config.name }}__row {{ config.name }}__navigation-main is-hidden-sm-md">
             {% block mainNavigation %}
