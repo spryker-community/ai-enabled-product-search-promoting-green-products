@@ -16,8 +16,6 @@ use GuzzleHttp\HandlerStack;
 
 class NlpGenerator implements NlpGeneratorInterface
 {
-
-
     /**
      *
      */
@@ -32,7 +30,13 @@ class NlpGenerator implements NlpGeneratorInterface
      */
     public function generateNlp(string $text)
     {
-        $serviceAccountFile = '/data/valued-bivouac-430416-b8-aa1869b60e91.json';
+        $serviceAccountFilePath = getenv('SERVICE_ACCOUNT_CREDENTIALS_FILE_PATH');
+
+        if ($serviceAccountFilePath) {
+            $serviceAccountFile = $serviceAccountFilePath;
+        } else {
+            $serviceAccountFile = '/data/valued-bivouac-430416-b8-aa1869b60e91.json';
+        }
 
         $scopes = ['https://www.googleapis.com/auth/cloud-platform'];
         try{
