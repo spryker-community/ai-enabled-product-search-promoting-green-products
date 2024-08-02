@@ -64,6 +64,10 @@ use Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter\SpellingSuggestionS
 use Spryker\Client\SearchHttp\Plugin\Search\ProductConcreteCatalogSearchHttpResultFormatterPlugin;
 use Spryker\Client\SearchHttp\Plugin\Search\SearchHttpSearchResultCountPlugin;
 use Spryker\Shared\SearchHttp\SearchHttpConfig;
+use Pyz\Client\SearchElasticsearch\Plugin\QueryExpander\AiElasticSearchQueryExpanderPlugin;
+use Pyz\Client\Catalog\Plugin\Elasticsearch\Query\PyzProductCatalogSearchQueryPlugin;
+use Pyz\Client\Catalog\Plugin\ConfigTransferBuilder\AscendingCarbonEmissionSortConfigTransferBuilderPlugin;
+use Pyz\Client\Catalog\Plugin\ConfigTransferBuilder\DescendingCarbonEmissionSortConfigTransferBuilderPlugin;
 
 class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
 {
@@ -86,6 +90,8 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
     protected function getSortConfigTransferBuilderPlugins(): array
     {
         return [
+            new AscendingCarbonEmissionSortConfigTransferBuilderPlugin(),
+            new DescendingCarbonEmissionSortConfigTransferBuilderPlugin(),
             new RatingSortConfigTransferBuilderPlugin(),
             new AscendingNameSortConfigTransferBuilderPlugin(),
             new DescendingNameSortConfigTransferBuilderPlugin(),
@@ -101,7 +107,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
      */
     protected function createCatalogSearchQueryPlugin(): QueryInterface
     {
-        return new ProductCatalogSearchQueryPlugin();
+        return new PyzProductCatalogSearchQueryPlugin();
     }
 
     /**
@@ -119,6 +125,7 @@ class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
             new SpellingSuggestionQueryExpanderPlugin(),
             new IsActiveQueryExpanderPlugin(),
             new IsActiveInDateRangeQueryExpanderPlugin(),
+            new AiElasticSearchQueryExpanderPlugin(),
 
             /*
              * FacetQueryExpanderPlugin needs to be after other query expanders which filters down the results.
