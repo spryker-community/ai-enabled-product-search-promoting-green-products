@@ -6,6 +6,13 @@ This feature allows customer to view products based on phrase search that they h
 
 This project integrate with google vertex api to get related data based on provided text.
 
+## 📹 Team Demo
+Team Nagarro Oryx presented this demo at the conclusion of the Nagarro Hackathon on Augsut 2nd, 2024:
+
+[![Nagarro Hackathon: Demo Team #1: Nagarro Oryx](https://img.youtube.com/vi/NwLKH8mhmTg/0.jpg)](https://www.youtube.com/watch?v=NwLKH8mhmTg)
+
+[View other team demo's on our YouTube Playlist](https://www.youtube.com/playlist?list=PLJooqCSo73SiCupw9Xtj8-6vUERAxpdk_)
+
 ## Prerequisite
 - Should have a service account credentials with vertex ai admin access stored in json file at root level and set env variable with file path as `SERVICE_ACCOUNT_CREDENTIALS_FILE_PATH`.
 
